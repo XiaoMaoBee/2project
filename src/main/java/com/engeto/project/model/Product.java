@@ -24,6 +24,8 @@ public class Product {
 
     }
 
+    // Getters/Setters
+
     public int getPartNo() {
         return partNo;
     }
