@@ -15,22 +15,10 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
-//    @Autowired
-//    public ProductController(ProductRepository productRepository) {
-//        this.productRepository = productRepository;
-//    }
-
     @GetMapping("/hello")
     public String getHello() {
         return "Hello World";
     }
-
-
-//    @GetMapping("/products")
-//    public List<Product> getAllProducts(Model model) throws SQLException {
-//        //model.addAttribute("allProducts",productRepository.getAllProducts());
-//        return productRepository.getAllProducts();
-//    }
 
     @GetMapping("/products")
     public List<Product> getAllProducts(Product product) throws SQLException {
@@ -38,35 +26,25 @@ public class ProductController {
         return productRepository.getAllProducts();
     }
 
-//    @GetMapping("/products/{id}")
-//    public Product getProductById(@RequestParam int id) throws SQLException {
-//        return productRepository.getProductById(id);
-//    }
-
     @GetMapping("/product/{id}")               //FUNGUJE
     public Product getProductById(@PathVariable(value = "id") int id) throws SQLException {
         return productRepository.getProductById(id);
     }
 
-//    @PostMapping(value = "/product")
-//    public String saveProducts(@RequestBody Product product) throws SQLException {
-//        productRepository.saveProduct(product);
-//        return "Saved ...";
-//    }
-//
+
     @PostMapping(value = "/product")
     public String saveProducts(@RequestBody Product product) throws SQLException {
         productRepository.saveProduct(product);
         return "Saved ...";
     }
 
-    @PostMapping("/update_price")    //FUNGUJE
-    public String updateProducts(@ModelAttribute("product") Product product) throws SQLException {
-        productRepository.update(15,BigDecimal.valueOf(2356));
+    @PutMapping("/update_price")
+    public String updateProducts(@RequestBody Product productForUpdate) throws SQLException {
+        productRepository.update(productForUpdate.getId(), productForUpdate.getPrice());
         return "redirect:/";
     }
 
-    @GetMapping("/delete_not_available_products")   //FUNGUJE
+    @GetMapping("/delete_not_available_products")
     public String deleteProducts() throws SQLException {
         productRepository.deleteOutOfStock();
         return "deleted ...";

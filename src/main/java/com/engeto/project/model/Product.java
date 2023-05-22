@@ -48,12 +48,11 @@ public class Product {
         this.description = description;
     }
 
-    public boolean isForSale() {
+    public boolean getisForSale() {
 
-        return this.isForSale;
+        return isForSale;
     }
-
-    public void setForSale(boolean isForSale) {
+    public void setisForSale(boolean isForSale) {
 
         this.isForSale = isForSale;
     }

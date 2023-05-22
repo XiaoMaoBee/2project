@@ -14,7 +14,6 @@ public class ProductRepository {
     public ProductRepository() throws SQLException {
     }
 
-
     Connection connection = DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/eshop",
             "root",
@@ -34,7 +33,7 @@ public class ProductRepository {
             product.setName(resultSet.getString("Name"));
             product.setPartNo(resultSet.getInt("PartNo"));
             product.setDescription(resultSet.getString("Description"));
-            product.setForSale(resultSet.getBoolean("IsForSale"));
+            product.setisForSale(resultSet.getBoolean("IsForSale"));
             product.setPrice(resultSet.getBigDecimal("Price"));
             allProducts.add(product);
         }
@@ -52,7 +51,7 @@ public class ProductRepository {
             product.setName(resultSet.getString("Name"));
             product.setPartNo(resultSet.getInt("PartNo"));
             product.setDescription(resultSet.getString("Description"));
-            product.setForSale(resultSet.getBoolean("IsForSale"));
+            product.setisForSale(resultSet.getBoolean("IsForSale"));
             product.setPrice(resultSet.getBigDecimal("Price"));
         }
         return product;
@@ -67,12 +66,12 @@ public class ProductRepository {
                 + product.getName() + "', '"
                 + product.getPartNo() + "', '"
                 + product.getDescription() + "', '"
-                + (product.isForSale() ? 1:0) + "', '"
+                + (product.getisForSale() ? 1:0) + "', '"
                 + product.getPrice() + "')";
         statement.executeUpdate(query);
     }
 
-    // 4. update price by ID                          FUNGUJE
+    // 4. update price by ID
     //Změní cenu uvedeného produktu.
     //Jako parametry vyžaduje ID produktu a novou cenu.
 
@@ -83,7 +82,7 @@ public class ProductRepository {
     }
 
 
-    // 5. delete out of sale items                      FUNGUJE
+    // 5. delete out of sale items
     //Odstraní z databázové tabulky záznamy o produktech, které již nenabízíme (is for sale je false)
 
     public void deleteOutOfStock() throws SQLException {
