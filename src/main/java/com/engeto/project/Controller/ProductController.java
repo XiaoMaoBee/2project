@@ -1,9 +1,8 @@
 package com.engeto.project.Controller;
 
-import com.engeto.project.Product;
+import com.engeto.project.model.Product;
 import com.engeto.project.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -44,12 +43,18 @@ public class ProductController {
 //        return productRepository.getProductById(id);
 //    }
 
-    @GetMapping("/products/{id}")
-    public Product getProductById(@RequestParam(value = "id") int id) throws SQLException {
+    @GetMapping("/product/{id}")               //FUNGUJE
+    public Product getProductById(@PathVariable(value = "id") int id) throws SQLException {
         return productRepository.getProductById(id);
     }
 
-    @PostMapping(value = "/save")
+//    @PostMapping(value = "/product")
+//    public String saveProducts(@RequestBody Product product) throws SQLException {
+//        productRepository.saveProduct(product);
+//        return "Saved ...";
+//    }
+//
+    @PostMapping(value = "/product")
     public String saveProducts(@RequestBody Product product) throws SQLException {
         productRepository.saveProduct(product);
         return "Saved ...";
@@ -57,13 +62,19 @@ public class ProductController {
 
     @PostMapping("/update_price")    //FUNGUJE
     public String updateProducts(@ModelAttribute("product") Product product) throws SQLException {
-        productRepository.update(5,BigDecimal.valueOf(356));
+        productRepository.update(15,BigDecimal.valueOf(2356));
         return "redirect:/";
     }
 
-    @GetMapping("/deleteProducts")   //FUNGUJE
+    @GetMapping("/delete_not_available_products")   //FUNGUJE
     public String deleteProducts() throws SQLException {
         productRepository.deleteOutOfStock();
-        return "redirect:/";
+        return "deleted ...";
+    }
+
+    @GetMapping("/delete_all_products")
+    public String deleteAll() throws SQLException {
+        productRepository.deleteAll();
+        return "all deleted ...";
     }
 }

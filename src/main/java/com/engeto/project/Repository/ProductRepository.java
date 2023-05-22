@@ -1,6 +1,6 @@
 package com.engeto.project.Repository;
 
-import com.engeto.project.Product;
+import com.engeto.project.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -27,8 +27,9 @@ public class ProductRepository {
         ResultSet resultSet = statement.executeQuery("SELECT * FROM products");
 
         List<Product> allProducts = new ArrayList<>();
-        Product product = new Product();
+
         while (resultSet.next()) {
+            Product product = new Product();
             product.setId(resultSet.getInt("id"));
             product.setName(resultSet.getString("Name"));
             product.setPartNo(resultSet.getInt("PartNo"));
@@ -43,8 +44,7 @@ public class ProductRepository {
     // 2. load product by ID
     //Vrátí informace o produktu se zadaným ID.
     public Product getProductById(int id) throws SQLException {
-        //String query = "SELECT * FROM employee WHERE id = " + id;
-        String query = "select * from products where id = 3";
+        String query = "select * from products where id= " + id;
         ResultSet resultSet = statement.executeQuery(query);
         Product product = new Product();
         if (resultSet.next()) {
@@ -67,7 +67,7 @@ public class ProductRepository {
                 + product.getName() + "', '"
                 + product.getPartNo() + "', '"
                 + product.getDescription() + "', '"
-                + product.isForSale() + "', '"
+                + (product.isForSale() ? 1:0) + "', '"
                 + product.getPrice() + "')";
         statement.executeUpdate(query);
     }
@@ -88,6 +88,11 @@ public class ProductRepository {
 
     public void deleteOutOfStock() throws SQLException {
         String query = "DELETE FROM products WHERE IsForSale = " + false;
+        statement.executeUpdate(query);
+    }
+
+    public void deleteAll() throws SQLException {
+        String query = "delete from products";
         statement.executeUpdate(query);
     }
 }

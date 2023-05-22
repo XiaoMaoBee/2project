@@ -1,4 +1,4 @@
-package com.engeto.project;
+package com.engeto.project.model;
 
 import java.math.BigDecimal;
 
@@ -49,11 +49,13 @@ public class Product {
     }
 
     public boolean isForSale() {
-        return isForSale;
+
+        return this.isForSale;
     }
 
-    public void setForSale(boolean forSale) {
-        isForSale = forSale;
+    public void setForSale(boolean isForSale) {
+
+        this.isForSale = isForSale;
     }
 
     public BigDecimal getPrice() {
